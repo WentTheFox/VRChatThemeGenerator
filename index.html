@@ -14,7 +14,7 @@
   input[type=text] { font: 1rem ui-monospace, monospace; padding: .5rem .6rem; background: #14171c; color: inherit; border: 1px solid #444; border-radius: 6px; }
   #hex { width: 8rem; }
   #out { width: 100%; box-sizing: border-box; }
-  button { font: inherit; padding: .5rem 1rem; border-radius: 6px; border: 0; background: #6181b8; color: #fff; cursor: pointer; }
+  button { font: inherit; padding: .5rem 1rem; border-radius: 6px; border: 0; background: #6AE3F9; color: #113637; cursor: pointer; }
   .swatches { display: grid; grid-template-columns: repeat(6, 1fr); border-radius: 8px; overflow: hidden; margin: 1.5rem 0; }
   .sw { height: 110px; text-align: center; display: flex; align-items: flex-end; justify-content: center; padding-bottom: .4rem; font: .72rem ui-monospace, monospace; cursor: pointer; }
   .sw span { background: #0008; color: #fff; padding: 0 .3rem; border-radius: 3px; }
@@ -27,8 +27,8 @@
   <h1>VRChat UI theme palette</h1>
 
   <div class="row">
-    <input type="color" id="picker" value="#6181b8">
-    <input type="text" id="hex" value="#6181b8" maxlength="7" spellcheck="false">
+    <input type="color" id="picker" value="#6AE3F9">
+    <input type="text" id="hex" value="#6AE3F9" maxlength="7" spellcheck="false">
     <label><input type="checkbox" id="tint"> Tint background with accent hue</label>
   </div>
 
@@ -72,7 +72,9 @@ function hslToHex({ h, s, l }) {
 }
 
 // Ratios derived from the VRChat default palette (relative to slot 1 = #6AE3F9, L .70 / S .92)
+const DEFAULTS = ['#6AE3F9','#2BAAC1','#113637','#1F232A','#BABABA','#008389'];
 function generate(accent, tint) {
+  if (!tint && accent.toUpperCase() === DEFAULTS[0]) return DEFAULTS.slice(); // exact VRChat defaults
   const { h, s: s0, l } = hexToHsl(accent);
   const s = Math.max(s0, 0.6); // keep derived shades from going muddy on dull accents
   const mid  = { h, s: clamp(s * 0.69), l: clamp(l - 0.233) };
