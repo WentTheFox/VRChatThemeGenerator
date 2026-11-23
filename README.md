@@ -10,4 +10,4 @@ Open `index.html` in a browser (no server required), choose a color, then click 
 
 ## How the palette is derived
 
-Highlight is the accent as entered. Icons, Buttons and Subtext keep the accent's hue, with saturation and lightness scaled using ratios taken from VRChat's default theme (`#6AE3F9,#2BAAC1,#113637,#1F232A,#BABABA,#008389`). Background and Fonts stay neutral; an option tints the background with the accent hue.
+The accent you enter drives **Icons**, the slot most visible in VRChat's UI. Highlight, Buttons and Subtext keep its hue and chroma at fixed OKLCH lightness steps taken from VRChat's default theme (`#6AE3F9,#2BAAC1,#113637,#1F232A,#BABABA,#008389`), so any hue stays readable on the dark UI. Chroma is clamped and gamut-mapped, grays produce neutral palettes, and Background and Fonts stay neutral; an option tints the background with the accent hue. Entering `#2BAAC1` reproduces the default theme exactly.
