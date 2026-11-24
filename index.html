@@ -23,13 +23,14 @@
   .mock { --hl:#6AE3F9; --ic:#2BAAC1; --bt:#113637; --bg:#1F232A; --fn:#BABABA; --st:#008389;
     --sub: var(--ic); font-size: .8rem; color: #fff; }
   .mock .ico { display: inline-block; width: 16px; height: 16px; border-radius: 4px; background: var(--ic); flex: none; }
-  .mock .stage { display: grid; grid-template-columns: 130px 1fr; gap: 8px; align-items: start; }
+  .mock .stage { display: grid; grid-template-columns: 142px 1fr; gap: 8px; align-items: start; }
   .mock .panel { border-radius: 8px; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
-  .mock .banner { height: 42px; border-radius: 4px; background: #6a8bd0; }
+  .mock .banner { height: 42px; border-radius: 4px; background: var(--ic); }
   .mock .card { background: var(--r-card); border: 2px solid color-mix(in srgb, var(--hl) 9%, var(--r-card)); border-radius: 4px; padding: 3px 7px; }
   .mock .card { display: flex; align-items: center; gap: 8px; }
   .mock .card small { display: block; font-weight: 700; font-size: .6rem; letter-spacing: .05em; }
-  .mock .card div span { color: var(--r-txt); font-weight: 600; font-size: .75rem; }
+  .mock .card > div { min-width: 0; }
+  .mock .card div > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; color: var(--r-txt); font-weight: 600; font-size: .75rem; }
   .mock .win { background: var(--r-win); border-radius: 10px 10px 0 0; padding: 8px; display: grid; grid-template-columns: 120px 1fr; gap: 8px; }
   .mock .top { background: var(--r-top); border-radius: 6px; grid-column: 1 / 3; display: flex; align-items: center; gap: 8px; padding: 2px 4px 6px; }
   .mock .top b { flex: 1; text-align: center; font-size: 1.4rem; }
@@ -48,7 +49,7 @@
   .mock .tile.plain { background: var(--r-card); }
   .mock [data-label]:hover { outline: 1px dashed #fff9; outline-offset: 1px; }
   .mock .muted { color: var(--fn); }
-  .mock .nav { display: flex; gap: 3px; padding: 0; margin-left: 138px; font-size: .7rem; align-items: flex-start; }
+  .mock .nav { display: flex; gap: 3px; padding: 0; margin-left: 150px; font-size: .7rem; align-items: flex-start; }
   .mock .nav div { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 8px 2px; min-width: 0; text-align: center; border-radius: 0 0 12px 12px; font-size: .62rem; font-weight: 700; color: var(--r-navlabel); background: var(--r-nav); cursor: pointer; }
   .mock .nav .ico { width: 22px; height: 22px; border-radius: 5px; background: var(--r-navicon); }
   .mock .nav div:hover, .mock .nav div.hov { background: var(--r-hovbg); color: var(--r-hovlabel); }
@@ -63,6 +64,9 @@
   .explain dt i { width: 1rem; height: 1rem; border-radius: 4px; flex: none; border: 1px solid #fff3; }
   .explain dd { margin: 0; color: #bbb; font-size: .9rem; line-height: 1.5; }
   @media (max-width: 560px) { .explain dl { grid-template-columns: 1fr; gap: .2rem; } .explain dd { margin-bottom: .8rem; } }
+  footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #fff2; font-size: .85rem; color: #999; }
+  footer a { color: #6AE3F9; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
   .note { font-size: .85rem; color: #999; }
 </style>
 </head>
@@ -79,14 +83,14 @@
   <div class="world"><div class="mock" id="mock">
     <div class="stage">
       <div class="panel" data-bg="panel" data-label="Side panel background">
-        <div class="banner" data-label="Profile banner (user-set, not themed)"></div>
+        <div class="banner" data-bg="ic" data-label="Profile banner"></div>
         <div class="card" data-bg="card" data-label="Card"><span class="ico" style="background:#eb7c00;border-radius:50%" data-label="Status dot (user-set, not themed)"></span><div><small data-fg="st75" data-label="Card label">STATUS</small><span data-fg="txt" data-label="Card value">Ask Me</span></div></div>
-        <div class="card" data-bg="card" data-label="Card"><span class="ico" data-bg="ic" data-label="Card icon"></span><div><small data-fg="st75" data-label="Card label">AVATAR</small><span data-fg="txt" data-label="Card value">KitDisy v4.1</span></div></div>
-        <div class="card" data-bg="card" data-label="Card"><span class="ico" data-bg="ic" data-label="Card icon"></span><div><small data-fg="st75" data-label="Card label">WORLD</small><span data-fg="txt" data-label="Card value">My Room</span></div></div>
-        <div class="card" data-bg="card" data-label="Card"><span class="ico" data-bg="ic" data-label="Card icon"></span><div><small data-fg="st75" data-label="Card label">FRIENDS</small><span data-fg="txt" data-label="Card value">18 Online</span></div></div>
+        <div class="card" data-bg="card" data-label="Card"><span class="ico" data-bg="ic" data-label="Card icon"></span><div><small data-fg="st75" data-label="Card label">AVATAR</small><span data-fg="txt" data-label="Card value">Freakhound</span></div></div>
+        <div class="card" data-bg="card" data-label="Card"><span class="ico" data-bg="ic" data-label="Card icon"></span><div><small data-fg="st75" data-label="Card label">WORLD</small><span data-fg="txt" data-label="Card value">VRChat Home</span></div></div>
+        <div class="card" data-bg="card" data-label="Card"><span class="ico" data-bg="ic" data-label="Card icon"></span><div><small data-fg="st75" data-label="Card label">FRIENDS</small><span data-fg="txt" data-label="Card value"><span id="online">18</span> Online</span></div></div>
       </div>
       <div class="win">
-        <div class="top"><span class="ico" data-bg="ic57" data-label="Top bar icon"></span><span data-fg="w" data-label="Username">WentTheFox</span><b id="clock" data-fg="txt" data-label="Clock">00:17</b><span class="ico" data-bg="ic57" data-label="Top bar icon"></span><span class="ico" data-bg="ic" data-label="Top bar icon (active/hovered)"></span><span class="ico" data-bg="ic57" data-label="Top bar icon"></span></div>
+        <div class="top"><span class="ico" data-bg="ic57" data-label="Top bar icon"></span><span data-fg="w" data-label="Username">Username</span><b id="clock" data-fg="txt" data-label="Clock">00:17</b><span class="ico" data-bg="ic57" data-label="Top bar icon"></span><span class="ico" data-bg="ic" data-label="Top bar icon (active/hovered)"></span><span class="ico" data-bg="ic57" data-label="Top bar icon"></span></div>
         <div class="side">
           <div class="item" data-label="Menu item"><span class="ico" data-bg="ic79" data-label="Menu icon"></span><span data-fg="txt" data-label="Menu item text">Photo Gallery</span></div>
           <div class="item" data-label="Menu item"><span class="ico" data-bg="ic79" data-label="Menu icon"></span><span data-fg="txt" data-label="Menu item text">Emoji</span></div>
@@ -148,6 +152,10 @@
     </dl>
     <p class="note">Why not just VRChat's default colors? The built-in Default theme is a separate internal theme. Importing its six colors looks different, and the active tab ends up nearly unreadable. This tool follows how imported palettes actually render, measured from the game. Hover a piece of the preview to see which color it uses, then paste the string above into VRChat's <b>Import</b>.</p>
   </section>
+
+  <footer>
+    Developed by <a href="https://went.tf" target="_blank" rel="noopener">WentTheFox</a> - Source code on <a href="https://github.com/WentTheFox/VRChatThemeGenerator" target="_blank" rel="noopener">GitHub</a>
+  </footer>
 </main>
 
 <script>
@@ -188,9 +196,7 @@ function oklchToHex(c) {
 // from the editor's default palette (#6AE3F9,#2BAAC1,#113637,#1F232A,#BABABA,#008389) in OKLCH: L .307.
 // Highlight, Icons, Subtext and Fonts deviate on purpose: the default's dark Subtext and light Highlight leave card
 // labels and active tabs unreadable.
-const DEFAULTS = ['#6AE3F9','#2BAAC1','#113637','#1F232A','#BABABA','#008389'];
 function generate(accent, tint) {
-  if (!tint && accent.toUpperCase() === DEFAULTS[1]) return DEFAULTS.slice(); // exact VRChat defaults
   const { L, C: c0, H } = hexToOklch(accent);
   const neutral = c0 < 0.02;                                  // grays have no meaningful hue
   const C = neutral ? 0 : clamp(c0, 0.07, 0.14);
@@ -279,6 +285,9 @@ function tick() {
 }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) tick(); });
 tick();
+
+// Random online-friend count each time the page loads (a one-off, not a timer)
+$('online').textContent = 1 + Math.floor(Math.random() * 99);
 </script>
 </body>
 </html>
