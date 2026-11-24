@@ -147,21 +147,24 @@ function oklchToHex(c) {
   return '#' + oklchToRgb({ ...c, C }).map(v => toSrgb(v).toString(16).padStart(2, '0')).join('').toUpperCase();
 }
 
-// The entered colour drives the Icons slot (the accent seen most in VRChat's UI). Slot lightness comes from the
-// default palette (#6AE3F9,#2BAAC1,#113637,#1F232A,#BABABA,#008389) in OKLCH: L .855/.682/.307/.255/.789/.555.
+// The entered colour drives the Icons slot (the accent seen most in VRChat's UI). Buttons lightness comes
+// from the editor's default palette (#6AE3F9,#2BAAC1,#113637,#1F232A,#BABABA,#008389) in OKLCH: L .307.
+// Highlight, Icons, Subtext and Fonts deviate on purpose: the default's dark Subtext and light Highlight leave card
+// labels and active tabs unreadable.
 const DEFAULTS = ['#6AE3F9','#2BAAC1','#113637','#1F232A','#BABABA','#008389'];
 function generate(accent, tint) {
   if (!tint && accent.toUpperCase() === DEFAULTS[1]) return DEFAULTS.slice(); // exact VRChat defaults
   const { L, C: c0, H } = hexToOklch(accent);
   const neutral = c0 < 0.02;                                  // grays have no meaningful hue
   const C = neutral ? 0 : clamp(c0, 0.07, 0.14);
-  const iconsL = clamp(L, 0.62, 0.72);
+  const iconsL = clamp(L, 0.74, 0.84);                      // the active tab's icon sits on Highlight, so Icons must stay well above it
   const icons = iconsL === L && C === c0 ? accent.toUpperCase() : oklchToHex({ L: iconsL, C, H });
-  const hl   = oklchToHex({ L: Math.min(iconsL + 0.17, 0.90), C, H });
+  // Highlight is the background of hovered/active nav tabs, whose labels are mostly Fonts: keep it mid-dark for contrast.
+  const hl   = oklchToHex({ L: 0.44, C, H });
   const dark = oklchToHex({ L: 0.307, C: C * 0.38, H });
-  const deep = oklchToHex({ L: 0.555, C: C * 0.85, H });
+  const deep = oklchToHex({ L: 0.78, C: C * 0.85, H });      // small caps card labels (dimmed to 75% in-game) need ~4.5:1
   const bg   = tint && !neutral ? oklchToHex({ L: 0.255, C: 0.03, H }) : '#1F232A';
-  return [hl, icons, dark, bg, '#BABABA', deep];
+  return [hl, icons, dark, bg, '#F2F2F2', deep];
 }
 
 
@@ -180,7 +183,7 @@ function roles([hl, ic, bt, bg, fn, st]) {
     win: mul(bg, 0.38), top: mul(bg, 0.49), panel: mul(bg, 0.42), card: mul(bt, 0.6), mib: mul(bt, 0.08), sel: mul(hl, 0.22),
     nav, navicon: mul(ic, 0.75), navlabel: mul(fn, 0.58),
     hovbg, hovicon: mix(ic, '#FFFFFF', 0.65), hovlabel: mix(fn, hovbg, 0.45),
-    actbg, acticon: mix(ic, actbg, 0.2), actlabel: mix(fn, actbg, 0.55),
+    actbg, acticon: mul(ic, 0.97), actlabel: mul(fn, 0.96),
   };
 }
 
