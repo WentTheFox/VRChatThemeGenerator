@@ -1,0 +1,12 @@
+{
+  "name": "vrchat-theme-generator",
+  "private": true,
+  "description": "Generate a VRChat UI theme from a single accent color",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^3.0.0"
+  },
+  "packageManager": "pnpm@11.22.0"
+}

@@ -1,0 +1,6 @@
+# Only install package versions that have been published for at least 2 weeks (value is in minutes).
+minimumReleaseAge: 20160
+
+# esbuild's postinstall script is not needed: its platform binary arrives as an optional dependency.
+allowBuilds:
+  esbuild: false
