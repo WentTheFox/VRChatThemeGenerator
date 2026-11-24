@@ -38,7 +38,11 @@
   .mock .item.sel { border-color: var(--r-hl80); background: var(--r-sel); }
   .mock h4 { margin: 0 0 6px; font-size: .95rem; }
   .mock .tiles { display: flex; gap: 6px; margin-bottom: 10px; }
-  .mock .tile { flex: 1; height: 56px; border-radius: 6px; border: 2px solid transparent; display: flex; align-items: flex-end; justify-content: center; font-size: .65rem; font-weight: 700; padding-bottom: 2px; }
+  .mock .tile { position: relative; overflow: hidden; flex: 1; height: 56px; border-radius: 6px; border: 2px solid transparent; display: flex; align-items: flex-end; justify-content: center; font-size: .65rem; font-weight: 700; padding-bottom: 2px;
+    box-shadow: inset 0 0 7px 1px rgba(0,0,0,.6); }                       /* edge shadow, ~6px like the game's tiles */
+  .mock .tile::after { content: ''; position: absolute; inset: 0; pointer-events: none;   /* dark band under the label, from ~68% down */
+    background: linear-gradient(to bottom, transparent 62%, rgba(0,0,0,.35) 74%, rgba(0,0,0,.72) 90%); }
+  .mock .tile span { position: relative; z-index: 1; }
   .mock .tile.sel { border-color: var(--r-hl105); }
   .mock .tile.pal { background: linear-gradient(90deg, var(--hl) 0 16.6%, var(--ic) 0 33.3%, var(--bt) 0 50%, var(--bg) 0 66.6%, var(--fn) 0 83.3%, var(--st) 0); }
   .mock .tile.plain { background: var(--r-card); }
@@ -51,6 +55,14 @@
   .mock .nav div:hover .ico, .mock .nav div.hov .ico { background: var(--r-hovicon); }
   .mock .nav div:active, .mock .nav div.act { background: var(--r-actbg); color: var(--r-actlabel); padding-bottom: 14px; }
   .mock .nav div:active .ico, .mock .nav div.act .ico { background: var(--r-acticon); }
+  .explain { margin-top: 2rem; }
+  .explain h2 { font-size: 1.05rem; margin: 0 0 .5rem; }
+  .explain dl { margin: 1rem 0; display: grid; grid-template-columns: 9.5rem 1fr; gap: .9rem 1rem; align-items: start; }
+  .explain dt { font-weight: 600; display: flex; align-items: center; gap: .5rem; }
+  .explain dt small { font-weight: 400; color: #999; }
+  .explain dt i { width: 1rem; height: 1rem; border-radius: 4px; flex: none; border: 1px solid #fff3; }
+  .explain dd { margin: 0; color: #bbb; font-size: .9rem; line-height: 1.5; }
+  @media (max-width: 560px) { .explain dl { grid-template-columns: 1fr; gap: .2rem; } .explain dd { margin-bottom: .8rem; } }
   .note { font-size: .85rem; color: #999; }
 </style>
 </head>
@@ -110,7 +122,32 @@
     <button id="copy">Copy</button>
     <span class="note" id="status">Click a swatch to copy its hex.</span>
   </div>
-  <p class="note">Slot order matches VRChat's Export/Import string: Highlight, Icons, Buttons, Background, Fonts, Subtext. Your accent drives Icons (the accent seen most in the UI); Highlight, Buttons and Subtext are lighter or darker steps of the same hue; Background and Fonts stay neutral. Rough mockup above: element colors are measured from VRChat screenshots of imported themes (most are one slot times a constant, e.g. icons are Icons dimmed to 57-79%, cards are Buttons at 60%). Hover a piece to see its slot; hover/click the bottom nav to try it. Note that VRChat's built-in Default theme is a separate internal theme: importing the default string gives a different look from it. Paste the string into VRChat's <b>Import</b>.</p>
+  <section class="explain">
+    <h2>What each color does in VRChat</h2>
+    <p class="note">VRChat's theme has six slots, always in this order: Highlight, Icons, Buttons, Background, Fonts, Subtext. You pick one accent; it becomes <b>Icons</b>, and the others are built from it so the UI stays readable.</p>
+    <dl>
+      <dt><i data-sw="1"></i>Icons <small>your accent</small></dt>
+      <dd>Every icon: the menu list, the top bar, the cards on the left and the bottom tabs (dimmed in places).
+        It's the color you see most, so it's the one you choose. It's lightened a little so icons stay clear against the darker colors.</dd>
+
+      <dt><i data-sw="0"></i>Highlight</dt>
+      <dd>Marks what's selected or active: outlines on the selected menu item and theme tile, the check badge, and the background of the bottom tab you hover or press.
+        The tab's icon and label sit on top of it, so it's made a darker shade of your hue. A light Highlight leaves the active tab unreadable, at the cost of slightly dimmer outlines.</dd>
+
+      <dt><i data-sw="2"></i>Buttons</dt>
+      <dd>The panels behind things: the profile cards, menu rows and scrollbar. VRChat darkens it further, so it's a very dark tint of your hue.</dd>
+
+      <dt><i data-sw="3"></i>Background</dt>
+      <dd>The window, top bar and side panel. VRChat darkens it heavily, so you only see a faint tint of it. It stays a neutral dark gray unless you tick the tint option.</dd>
+
+      <dt><i data-sw="4"></i>Fonts</dt>
+      <dd>Normal text: headings, the clock, menu names and card values. Secondary text is the same color, dimmed. It's kept near white so text reads on the dark UI.</dd>
+
+      <dt><i data-sw="5"></i>Subtext</dt>
+      <dd>The small capital labels above values (STATUS, AVATAR, WORLD, FRIENDS) and other captions. They're tiny and dimmed, so Subtext is made a light shade of your hue.</dd>
+    </dl>
+    <p class="note">Why not just VRChat's default colors? The built-in Default theme is a separate internal theme. Importing its six colors looks different, and the active tab ends up nearly unreadable. This tool follows how imported palettes actually render, measured from the game. Hover a piece of the preview to see which color it uses, then paste the string above into VRChat's <b>Import</b>.</p>
+  </section>
 </main>
 
 <script>
@@ -196,6 +233,7 @@ function render() {
   $('swatches').innerHTML = colors.map((c, i) =>
     `<div class="sw" style="background:${c}" data-hex="${c}" title="Copy ${c}"><span>${NAMES[i]}<br>${c}</span></div>`).join('');
   $('out').value = colors.join(',');
+  document.querySelectorAll('[data-sw]').forEach(e => e.style.background = colors[e.dataset.sw]);
   const R = roles(colors);
   const slotVal = k => R[k];
   Object.entries(R).forEach(([k, v]) => $('mock').style.setProperty('--r-' + k, v));
